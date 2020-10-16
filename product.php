@@ -564,15 +564,15 @@ require 'config.php';
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">
               <h3>Tags</h3>
+                <?php 
+                  $sql = "SELECT * FROM tags";
+                  $result = $conn->query($sql);
+                  while ($row = $result->fetch_assoc()) {
+                ?>
               <div class="tag-cloud">
-                <a href="#">Fashion</a>
-                <a href="#">Ecommerce</a>
-                <a href="#">Shop</a>
-                <a href="#">Hand Bag</a>
-                <a href="#">Laptop</a>
-                <a href="#">Head Phone</a>
-                <a href="#">Pen Drive</a>
+                <a href="#"><?php echo $row['tagName'] ?></a>
               </div>
+              <?php } ?>
             </div>
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">

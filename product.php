@@ -404,7 +404,13 @@ require 'config.php';
                 <!-- });
                   });
                     </script> -->       
-                <?php  
+                <?php
+                  if (isset($_REQUEST['page'])) {
+                    $page = $_REQUEST['page'];
+                    }else {
+                      $page=1;
+                  }
+
                 if (isset($_REQUEST['id']) == 0) {
                     $sql = "SELECT * FROM products ";
                 } if (isset($_REQUEST['id'])!= 0) {
@@ -419,6 +425,13 @@ require 'config.php';
                     $sql = "SELECT * FROM products where `colorid`=$cid";
                 }
                 $result = $conn->query($sql);
+                $count=mysqli_num_rows($result);
+                $per_page=2;
+                $no_of_page=ceil($count/$per_page);
+                $start=($page-1)*$per_page;
+                $sql="SELECT * FROM products limit $start,$per_page";
+                $result=mysqli_query($conn, $sql);
+                if (mysqli_num_rows($result)>0)
                 while ($row = $result->fetch_assoc()) {
                 ?>
                 <!-- start single product item -->
@@ -529,22 +542,30 @@ require 'config.php';
                 </div><!-- /.modal-dialog -->
               </div>
               <!-- / quick view modal -->       
-            </div>
+            </div>  
             <div class="aa-product-catg-pagination">
               <nav>
                 <ul class="pagination">
-                  <li>
-                    <a href="#" aria-label="Previous">
+                  <li
+                    <?php 
+                    if ($page==1)
+                    echo "class='disabled'";
+                    ?>
+                    ><a href="product.php?page=<?php echo $page-1 ?>" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li><a href="product.php?page=<?php echo $row['id']?>">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
-                  <li>
-                    <a href="#" aria-label="Next">
+                  <?php
+                  for ($i=1;$i<=$no_of_page;$i++)
+                  { ?>
+                    <li
+                    <?php if ($page==$i)echo 'class="active"';?>>
+                    <a href="product.php?page=<?php echo $i;?>"><?php echo $i;?></a></li>
+                  <?php
+                  }
+                  ?>
+                  <li <?php if ($page==$no_of_page) echo "class='disabled'"?>>
+                    <a href="product.php?page=<?php echo $page+1 ?>" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
                     </a>
                   </li>

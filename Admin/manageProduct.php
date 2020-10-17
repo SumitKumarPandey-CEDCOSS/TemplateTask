@@ -13,17 +13,19 @@
     
 if (isset($_POST['submit'])) {
     
-        $checkbox = $_POST['check'];
-        $new = "";
+        $checkbox = isset($_POST['check']) ? $_POST['check'] : '';
+    //     $new = "";
     
-    foreach ($checkbox as $values) {
+    // foreach ($checkbox as $values) {
     
-        $new .= $values . ",";
-    }
+    //     $new .= $values . ",";
+    // }
         $category = isset($_POST['dropdown']) ? $_POST['dropdown'] : '';
         $pname = isset($_POST['ProductName']) ? $_POST['ProductName'] : '';
         $pprice = isset($_POST['Price']) ? $_POST['Price'] : '';
         $desc = isset($_POST['desc']) ? $_POST['desc'] : '';
+        $code = isset($_POST['color']) ? $_POST['color'] : '';
+        echo $code;
     
         $filename = $_FILES["Image"]["name"];
         $tempname = $_FILES["Image"]["tmp_name"];
@@ -41,8 +43,8 @@ if (isset($_POST['submit'])) {
     }
     
         $sql = "INSERT INTO products(`image`,`name`,`price`,
-        `description`,`tags`,`catid`)
-         VALUES('$filename','$pname','$pprice','$desc','$new','$category')";
+        `description`,`tagId`,`catid`,`colorid`)
+         VALUES('$filename','$pname','$pprice','$desc','$checkbox','$category','$code')";
     
     if ($conn->query($sql) == true) {
             $error = array(
@@ -117,6 +119,7 @@ if (isset($_POST['submit'])) {
                             <th>Description</th>
                             <th>Tags</th>
                             <th>Category ID</th>
+                            <th>Color ID</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -135,8 +138,9 @@ if (isset($_POST['submit'])) {
                             <td><?php echo $row['name'] ?></td>
                             <td><?php echo $row['price'] ?></td>
                             <td><?php echo $row['description'] ?></td>
-                            <td><?php echo $row['tags'] ?></td>
+                            <td><?php echo $row['tagId'] ?></td>
                             <td><?php echo $row['catid'] ?></td>
+                            <td><?php echo $row['colorid'] ?></td>
                             <td>
                                 <!-- Icons -->
                                 <a href="Edit_Product.php?id=
@@ -159,6 +163,15 @@ if (isset($_POST['submit'])) {
             <!-- End #tab1 -->
             <div class="tab-content" id="tab2">
                 <form action="" method="POST" enctype="multipart/form-data">
+                <div id="errordiv">
+                            <?php if (sizeof($error)>0) : ?>
+                            <ul>
+                                <?php foreach ($error as $value) : ?>
+                                <li><?php echo $error['msg'] ;break ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <?php endif ; ?> 
+                        </div>
                     <p>
                         <label for="ProductName">ProductName: </label>
                         <input type="text" name="ProductName" 
@@ -198,12 +211,27 @@ if (isset($_POST['submit'])) {
                         while ($row = $result->fetch_assoc()) {
                                 ?>
                         <input type="checkbox" value="
-                            <?php echo $row["tagName"]; ?>" name="check[]" />
+                            <?php echo $row["tagId"]; ?>" name="check" />
                         <?php echo $row["tagName"]; ?>
                         <?php
                         }
                             ?>
                     </p>
+                    <p>
+                    <label>Color</label>
+                    <?php
+                     $sql = "SELECT * FROM color";
+                     $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                            ?>
+                            <input type = "radio" name="color" value="<?php echo $row['colorid'] ?>"
+                            style="height:15px;width:15px;" checked>
+                            <input type = "color" value = "<?php echo 
+                            $row['colorcode']?>" style="border:none;"
+                            disabled>
+                            <?php
+                    } 
+                            ?>
                     <p>
                         <label>Description</label>
                         <textarea class="text-input textarea wysiwyg" 

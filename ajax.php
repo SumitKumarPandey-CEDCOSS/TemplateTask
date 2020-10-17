@@ -1,6 +1,8 @@
 <?php 
-echo "hello".$_POST['id'];
-$id;
-$id = $_POST['id'];
+require 'config.php';
+global $prodid ;
+$prodid = $_POST['pid'];
 
+echo $prodid;
+// return $prodid;
 ?>

@@ -15,6 +15,7 @@
             $productmenu = array('manageProduct.php',
                                  'categories.php','tags.php');
             $usermenu = array('manageUser.php');
+            $colormenu = array("color.php");
             $order = array("order.php");
             ?>
         <h1 id="sidebar-title"><a href="#">Admin</a></h1>
@@ -68,6 +69,18 @@
                     <li><a <?php if ($filename == "manageUser.php" ) :?>
                     class="current"<?php endif; ?>
                     href="manageUser.php">Manage User</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="nav-top-item <?php if
+                (in_array($filename, $colormenu) ) : ?>
+                current<?php endif;?>">
+             Color
+                </a>
+                <ul>
+                    <li><a <?php if ($filename == "color.php" ) :?>
+                    class="current"<?php endif; ?>
+                    href="color.php">Color</a></li>
                 </ul>
             </li>
             <li>

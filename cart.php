@@ -15,8 +15,10 @@ if (empty($_SESSION['cart'])) {
      <center>
      <h1>You Need To add products in Your cart First
      </h1>".'<h2><h2></center></div>';
-require 'header.php';
+     return false;
 }
+require 'header.php';
+// session_destroy();
 ?>
   <!-- catg header banner section -->
   <section id="aa-catg-head-banner">

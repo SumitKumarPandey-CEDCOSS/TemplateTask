@@ -305,15 +305,15 @@ require 'header.php';
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">
               <h3>Tags</h3>
-                <?php 
+              <div class="tag-cloud">
+              <?php 
                 $sql = "SELECT * FROM tags";
                 $result = $conn->query($sql);
                 while ($row = $result->fetch_assoc()) {
                 ?>
-              <div class="tag-cloud">
                 <a href="product.php?tagId=<?php echo $row['tagId']?>"><?php echo $row['tagName'] ?></a>
+                <?php } ?>
               </div>
-              <?php } ?>
             </div>
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">

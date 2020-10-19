@@ -119,7 +119,12 @@ require 'header.php';
                    </tr> 
                  </tbody>
                </table>
-               <a href="#" class="aa-cart-view-btn">Proced to Checkout</a>
+               <?php
+                    foreach ($_SESSION['cart'] as $key => $value) {
+                    }
+                    ?>
+               <a href="checkout.php?id=<?php echo $value['id']?>" 
+               class="aa-cart-view-btn">Proced to Checkout</a>
              </div>
            </div>
          </div>

@@ -347,7 +347,7 @@ require 'header.php';
                 <input type = "hidden" name="color" value="<?php echo $row['colorid'] ?>"
                     style="height:15px;width:15px;" checked>
                     <input type = "color" value = "<?php echo 
-                    $row['colorcode']?>" style="border:none;height:30px;"
+                    $row['colorcode']?>" style="border:none;height:30px;cursor:pointer;"
                     disabled></a>
                     <?php
                     } 

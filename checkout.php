@@ -13,7 +13,6 @@ $total=0;
 require 'config.php';
 $error  = array();
 $status="SOLD";
-$id=$_REQUEST['id'];
 $data = json_encode($_SESSION['cart']);
 foreach ($_SESSION['cart'] as $key => $value) {
     $total = $value['price'] + $total;
@@ -21,8 +20,8 @@ foreach ($_SESSION['cart'] as $key => $value) {
 
 if (sizeof($error)==0) {
 
-    $sql="INSERT INTO orders(`orderid`, `cartdata`, `status`,`date`,`total`)
-      VALUES('$id', '$data', '$status', NOW(), '$total')";
+    $sql="INSERT INTO orders(`cartdata`, `status`,`date`,`total`)
+      VALUES('$data', '$status', NOW(), '$total')";
 
     if ($conn->query($sql) === true) {
         $error = array('input'=>'form','msg'=>"Record Added");

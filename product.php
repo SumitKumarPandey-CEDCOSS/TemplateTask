@@ -63,24 +63,7 @@ require 'header.php';
  
             <div class="aa-product-catg-body">
               <ul class="aa-product-catg">
-                  <!-- <script>
-                  $(document).ready(function(){
-                    
-                    $(".category").click(function(){        
-                      var catid = $(this).data('id');
-                      console.log("hello" +catid);
-                  $.ajax({
-                    method : "POST",
-                    url : "ajax.php",
-                    data : {pid : catid}
-                  })
-                  .done(function( msg ){
-                    var  $id = msg;
-                    console.log($id);
-                  }); -->
-                <!-- });
-                  });
-                    </script> -->       
+                   
                 <?php
                 if (isset($_REQUEST['page'])) {
                     $page = $_REQUEST['page'];
@@ -147,7 +130,8 @@ require 'header.php';
                       data-toggle="modal" data-target=
                       "#quick-view-modal" class="quick">
                       <span class="fa fa-search">
-                      </span></a>                            
+                      </span></a> 
+                          
                   </div>
                   <!-- product badge -->
                   <span class="aa-badge aa-sale" href="#">SALE!</span>   
@@ -155,6 +139,24 @@ require 'header.php';
                 <?php 
                 }
                 ?>  
+                    <script>
+                      $(document).ready(function(){
+                        
+                        $(".quick").click(function(){        
+                          var qid = $(this).data('id');
+                          console.log("hello" +qid);
+                      $.ajax({
+                        method : "POST",
+                        url : "ajax.php",
+                        data : {pid : qid}
+                      })
+                      .done(function( msg ){
+                        var  $id = msg;
+                        console.log($id);
+                      });
+                      });
+                      });
+                  </script> 
               </ul>
               <!-- quick view modal -->     
                 

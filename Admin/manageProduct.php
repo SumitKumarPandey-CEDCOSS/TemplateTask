@@ -43,8 +43,8 @@ if (isset($_POST['submit'])) {
     }
     
         $sql = "INSERT INTO products(`image`,`name`,`price`,
-        `description`,`tagId`,`catid`,`colorid`)
-         VALUES('$filename','$pname','$pprice','$desc','$checkbox','$category','$code')";
+        `description`,`tagId`,`catid`,`colorid`)VALUES('$filename','$pname',
+        '$pprice','$desc','$checkbox','$category','$code')";
     
     if ($conn->query($sql) == true) {
             $error = array(
@@ -134,7 +134,8 @@ if (isset($_POST['submit'])) {
                             <!-- <th><input class="check-all" 
                             type="checkbox" name="check[]" /></th> -->
                             <td><?php echo $row['id'] ?></td>
-                            <td><?php echo '<img src="images/' . $row['image'] . '">' ?></td>
+                            <td><?php echo '<img src="images/' .
+                            $row['image'] . '">' ?></td>
                             <td><?php echo $row['name'] ?></td>
                             <td><?php echo $row['price'] ?></td>
                             <td><?php echo $row['description'] ?></td>
@@ -224,7 +225,8 @@ if (isset($_POST['submit'])) {
                      $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) {
                             ?>
-                            <input type = "radio" name="color" value="<?php echo $row['colorid'] ?>"
+                            <input type = "radio" name="color" value="<?php echo 
+                            $row['colorid'] ?>"
                             style="height:15px;width:15px;" checked>
                             <input type = "color" value = "<?php echo 
                             $row['colorcode']?>" style="border:none;"

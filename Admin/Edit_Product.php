@@ -65,12 +65,7 @@
                     if (isset($_POST['submit'])) {
                         
                            $checkbox = $_POST['check'];
-                           $new ="";
-                        
-                        foreach ($checkbox as $values) {
-                        
-                            $new .=$values . "," ;
-                        }
+ 
                            $id= isset($_POST['id'])?$_POST['id']:"";
                            $name= isset($_POST['name'])?$_POST['name']:"";
                            $price= isset($_POST['price'])?$_POST['price']:"";
@@ -78,7 +73,8 @@
                            $desc = isset($_POST['desc'])?$_POST['desc']:'';
                         
                         $sql="UPDATE products SET `name`='$name', `price`='$price', 
-                           `image`='$image' WHERE `id`=$id";
+                        `image`='$image',`tagId`='$checkbox',`description`='$desc' 
+                           WHERE `id`=$id";
                         
                         if (mysqli_query($conn, $sql)) {
                             $error=array('input'=>'form','msg'=>
@@ -139,7 +135,7 @@
                             while ($row = $result->fetch_assoc()) {
                                         ?>
                             <input type="checkbox" value="
-                                <?php echo $row["tagName"];?>" name="check[]" />
+                                <?php echo $row["tagId"];?>" name="check" />
                             <?php echo $row["tagName"] ;?>
                             <?php
                             }

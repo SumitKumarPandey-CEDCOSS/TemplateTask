@@ -10,13 +10,12 @@
  */
 require 'config.php';
 session_start();
-if (empty($_SESSION['cart'])) {
-     echo "<div id='msg' style='color:red;'>
-     <center>
-     <h1>You Need To add products in Your cart First
-     </h1>".'<h2><h2></center></div>';
-     return false;
-}
+// if (empty($_SESSION['cart'])) {
+//      echo "<div id='msg' style='color:red;'>
+//      <center>
+//      <h1>You Need To add products in Your cart First
+//      </h1>".'<h2><h2></center></div>';
+// }
 require 'header.php';
 // session_destroy();
 ?>
@@ -59,29 +58,37 @@ require 'header.php';
                     </thead>
                         <?php 
                         // print_r($_SESSION);
-                        foreach ($_SESSION['cart'] as $key => $value) {
-                          // session_destroy();
-                    ?>
-                    <tbody>
-                      <tr>
-                        <td><a class="remove" href="deleteproduct.php?delid=<?php echo $value['id']?>
-                        "><fa class="fa fa-close"></fa></a></td>
-                        <td><?php echo '<img src="Admin/images/' . $value['image'] . '">' ?></td>
-                        <td><a class="aa-cart-title" href="#"><?php echo 
-                        $value['name']?></a></td>
-                        <td><?php echo $value['pricee']?></td>
-                        <td>
-                        <form method='POST'>
-                        <input type = Number name ='quantity' class="aa-cart-quantity"
-                        value="<?php echo $value['quantity']?>">
-                        </form>
-                        </td>
-                        <td><?php 
-                        echo $value['price'];
-                        ?></td>
-                      </tr>
-                    <?php
-                    }
+                        if (!empty($_SESSION['cart'])) {
+                            foreach ($_SESSION['cart'] as $key => $value) {
+                                // session_destroy();
+                            ?>
+                            <tbody>
+                              <tr>
+                                <td><a class="remove" href="deleteproduct.php?delid=<?php echo $value['id']?>
+                                "><fa class="fa fa-close"></fa></a></td>
+                                <td><?php echo '<img src="Admin/images/' .
+                                $value['image'] . '">' ?>
+                                </td>
+                                <td><a class="aa-cart-title" href="#"><?php echo 
+                                $value['name']?></a></td>
+                                <td><?php echo $value['pricee']?></td>
+                                <td>
+                                <form method='POST'>
+                                <input type = Number name ='quantity'
+                                class="aa-cart-quantity"
+                                value="<?php echo $value['quantity']?>">
+                                </form>
+                                </td>
+                                <td><?php 
+                                echo $value['price'];
+                                ?></td>
+                              </tr>
+                            <?php
+                            }
+                        } else {
+                            echo "<h1 style='color:red;'><center>CART IS EMPTY
+                            </center></h1>";
+                        }
                     ?>
                       <tr>
                         <td colspan="6" class="aa-cart-view-bottom">
@@ -91,7 +98,8 @@ require 'header.php';
                             <input class="aa-cart-view-btn" 
                             type="submit" value="Apply Coupon">
                           </div>
-                          <input class="aa-cart-view-btn" type="submit" value="Update Cart">
+                          <input class="aa-cart-view-btn" 
+                          type="submit" value="Update Cart">
                         </td>
                       </tr>
                       </tbody>
@@ -105,8 +113,12 @@ require 'header.php';
                  <tbody>
                     <?php
                     $total = 0;
-                    foreach ($_SESSION['cart'] as $key => $value) {
-                        $total = $value['price'] + $total;
+                    if (!empty($_SESSION['cart'])) {
+                        foreach ($_SESSION['cart'] as $key => $value) {
+                            $total = $value['price'] + $total;
+                        }
+                    } else {
+                        echo "";
                     }
                     ?>
                    <tr>
@@ -119,10 +131,14 @@ require 'header.php';
                    </tr> 
                  </tbody>
                </table>
-               <?php
+                <?php
+                if (!empty($_SESSION['cart'])) {
                     foreach ($_SESSION['cart'] as $key => $value) {
                     }
-                    ?>
+                } else {
+                     echo "";
+                }
+                ?>
                <a href="checkout.php?id=<?php echo $value['id']?>" 
                class="aa-cart-view-btn">Proced to Checkout</a>
              </div>

@@ -23,10 +23,7 @@ if (isset($_POST['submit'])) {
     }
         $conn->close();
     
-}
-    
-    
-    
+} 
     require 'header.php';
     require 'sidebar.php'; 
     ?>
@@ -121,8 +118,8 @@ if (isset($_POST['submit'])) {
                         </tr>
                     </tbody>
                     <?php
+                        }
                     }
-                }
                         ?>
                     <?php 
                         $conn->close();

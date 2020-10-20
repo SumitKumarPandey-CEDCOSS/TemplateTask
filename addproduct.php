@@ -17,29 +17,29 @@ if (isset($_REQUEST['pid'])) {
     $res = $conn->query($sql);
     while ($ab=mysqli_fetch_array($res)) {
         $pri = $ab['price'];
-        foreach ($_SESSION['cart'] as $key => $value) {
-            if ($ab['id'] == $value['id']) {
-                $id= $value['id'];
-                $name     = $value['name'];
-                $price    = $value['price'];
-                $image    = $value['image'];
-                $quantity =$value['quantity']+1;
-                $item = array(
-                "id" => $id,
-                "name" => $name,
-                "pricee"=>$pri,
-                "price" => $pri*$quantity,
-                "quantity" => $quantity,
-                "image" => $image
-                    );
-                echo '<script>alert("Product Quantity Increased in Cart 
-                Succefully")
-                </script>';
-                header("Refresh:0; url=product.php");
-                $_SESSION['cart'][$id] = $item;
-
-                // show();
-                return;
+        if (!empty($_SESSION)) {
+            foreach ($_SESSION['cart'] as $key => $value) {
+                if ($ab['id'] == $value['id']) {
+                    $id= $value['id'];
+                    $name     = $value['name'];
+                    $price    = $value['price'];
+                    $image    = $value['image'];
+                    $quantity =$value['quantity']+1;
+                    $item = array(
+                    "id" => $id,
+                    "name" => $name,
+                    "pricee"=>$pri,
+                    "price" => $pri*$quantity,
+                    "quantity" => $quantity,
+                    "image" => $image
+                        );
+                    echo '<script>alert("Product Quantity Increased in Cart 
+                    Succefully")
+                    </script>';
+                    header("Refresh:0; url=product.php");
+                    $_SESSION['cart'][$id] = $item;
+                    return;
+                }
             }
         }
         $name = $ab['name'];

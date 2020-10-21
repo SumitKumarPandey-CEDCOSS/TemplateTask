@@ -105,7 +105,7 @@ require 'header.php';
               <!-- start single product item -->
               <li>
                 <figure>
-                      <a class="aa-product-img" href="product-detail.php?id=<?php echo $row['id']?>">
+                    <a class="aa-product-img" href="product-detail.php?id=<?php echo $row['id']?>">
                     <?php echo'<img style="height:300px;width:250px;"src=
                       "Admin/images/' . $row['image'] . '">' ?></a> 
                       <a class="aa-add-card-btn"href="addproduct.php?pid=

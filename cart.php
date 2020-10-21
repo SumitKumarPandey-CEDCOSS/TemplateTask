@@ -10,12 +10,6 @@
  */
 require 'config.php';
 session_start();
-// if (empty($_SESSION['cart'])) {
-//      echo "<div id='msg' style='color:red;'>
-//      <center>
-//      <h1>You Need To add products in Your cart First
-//      </h1>".'<h2><h2></center></div>';
-// }
 require 'header.php';
 // session_destroy();
 ?>

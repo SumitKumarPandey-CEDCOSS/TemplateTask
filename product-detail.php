@@ -8,9 +8,66 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'config.php';
 session_start();
 require 'header.php';
+require 'config.php';
+
+if (isset($_REQUEST['submit'])) {
+    echo "<script>alert('ok')</script>";
+    $qty= isset($_POST['quantity']) ? $_POST['quantity'] : '';
+    echo $qty;
+    if (isset($_REQUEST['id'])) {
+        $id=$_REQUEST['id'];
+        $sql="SELECT * FROM products WHERE `id`=$id";
+        $res = $conn->query($sql);
+        while ($ab=mysqli_fetch_array($res)) {
+            $pri = $ab['price'];
+            if (!empty($_SESSION)) {
+                foreach ($_SESSION['cart'] as $key => $value) {
+                    if ($ab['id'] == $value['id']) {
+                        $id= $value['id'];
+                        $name     = $value['name'];
+                        $price    = $value['price'];
+                        $image    = $value['image'];
+                        $quantity =$value['quantity']+1;
+                        $item = array(
+                        "id" => $id,
+                        "name" => $name,
+                        "pricee"=>$pri,
+                        "price" => $pri*$quantity,
+                        "quantity" => $quantity,
+                        "image" => $image
+                            );
+                        echo '<script>alert("Product Quantity Increased in Cart 
+                        Succefully")
+                        </script>';
+                        header("Refresh:0; url=products.php");
+                        $_SESSION['cart'][$id] = $item;
+                        return;
+                    }
+                }
+            }
+            $name = $ab['name'];
+            $price = $ab['price'];
+            $id = $ab['id'];
+            $image = $ab['image'];
+            // $quantity =1;
+            $item = array(
+                "name" => $name,
+                "price" => $price*$qty,
+                "pricee" => $pri,
+                "id" => $id,
+                "quantity"=> $qty,
+                "image" => $image
+            );
+            echo '<script>alert("Product Added In Cart")</script>';
+            echo '<script>window.location="product.php"
+            </script>';
+            $_SESSION['cart'][$id]= $item;  
+        }
+    }
+}
+
 ?>
 <?php 
 if (isset($_REQUEST['id'])) {
@@ -81,16 +138,15 @@ while ($row = $result->fetch_assoc()) {
                             ?>                     
                     </div>
                     <div class="aa-prod-quantity">
-                      <form action="addproduct.php" method="$_POST">
+                      <form action="" method="POST">
                         <select id="" name="quantity">
-                          <option selected="1" value="0">1</option>
-                          <option value="1">2</option>
-                          <option value="2">3</option>
-                          <option value="3">4</option>
-                          <option value="4">5</option>
-                          <option value="5">6</option>
+                          <option selected="1" value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
                         </select>
-                      </form>
                     <?php
                         $sql = "SELECT * FROM category WHERE `catid`=$catid ";
                         $result = $conn->query($sql);
@@ -107,14 +163,13 @@ while ($row = $result->fetch_assoc()) {
                         $sql = "SELECT * FROM products WHERE `id`= $id ";
                         $result = $conn->query($sql);
                         while ($row = $result->fetch_assoc()) {
-                            $catid=$row['catid'];
-                            // echo $catid;
                         ?>
-                            <a class="aa-add-to-cart-btn" 
-                            href="addproduct.php?pid=<?php echo $row['id']?>">
-                            Add To Cart</a>
+                            
+                            <input type="submit" name="submit" value="ADD-TO--CART" 
+                            class="aa-add-to-cart-btn">
                         <?php } ?>
                     </div>
+                    </form>
                   </div>
                 </div>
               </div>

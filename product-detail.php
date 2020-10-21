@@ -77,6 +77,7 @@ $sql = "SELECT * FROM products WHERE `id`= $id ";
 $result = $conn->query($sql);
 while ($row = $result->fetch_assoc()) {
     $catid=$row['catid'];
+    $cid=$row['colorid'];
     // echo $catid;
 ?>
   <!-- product category -->
@@ -123,7 +124,7 @@ while ($row = $result->fetch_assoc()) {
                     <h4>Color</h4>
                     <div class="aa-color-tag">
                     <?php
-                     $sql = "SELECT * FROM color";
+                     $sql = "SELECT * FROM color WHERE `colorid`=$cid";
                      $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) {
                             ?>
